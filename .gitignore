@@ -1,0 +1,32 @@
+# OS files
+.DS_Store
+*.swp
+*~
+
+# Temporary files
+tmp/
+*.tmp
+
+# Environment / secrets
+.envrc
+.env
+
+# Logs
+logs/*.log
+
+# Data directories (track READMEs, not data)
+**/data/*
+!**/data/README.md
+
+# State files (track READMEs, not runtime state)
+state/*.json
+!state/README.md
+
+# Node modules
+node_modules/
+
+# Coverage
+coverage.txt
+
+# Private data patterns for test scanning (user-specific, never commit)
+.private-patterns
