@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add explicit bounded memory/Cerebro hierarchy and excerpt collection for the knowledge explorer; no QMD queries, automatic indexing or live activation.
 - Add explicit, opt-in business-operations flavor with Intel, Pipeline and Monetization snapshots, preview/apply/disable/restore and bounded local collection.
 - Document Command Center as standalone and Spacesuit as its highly recommended companion, without a standalone interaction UX.
 

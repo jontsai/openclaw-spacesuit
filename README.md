@@ -44,6 +44,11 @@ Asana and GitHub Issues are planned adapter targets, not implemented providers.
 
 ## What's Included
 
+An optional [knowledge snapshot collector](docs/adapters/knowledge.md) exports a
+bounded, read-only memory/Cerebro hierarchy and source excerpts for Command Center's
+knowledge explorer. It requires a host build with knowledge schema v1 support.
+QMD search, automatic indexing and scheduled collection are not connected.
+
 - **Session startup protocol** — security-first file loading order
 - **Memory system** — daily logs + curated long-term memory with commit discipline
 - **Git workflow** — mandatory pre-commit checks, worktree conventions, parallel multi-agent coordination with merge locks
