@@ -42,6 +42,15 @@ transport API is available for future authorized host connectors. Native status 
 identity are preserved; memory/topic strategies remain independently composable.
 Asana and GitHub Issues are planned adapter targets, not implemented providers.
 
+## Operator strategy foundation
+
+The [operator semantic model](docs/architecture/operator-semantics.md) separates
+tracker facts, human judgments, agent proposals and action authority. A tested,
+read-only Eisenhower priority evaluator preserves Important / Non-Urgent planning,
+unknown values and conflicting evidence. This is library groundwork, **not a live
+dashboard feature**. Capacity forecasting, banked-reset controls and knowledge search
+are proposed follow-ups, not installed capabilities.
+
 ## What's Included
 
 - **Session startup protocol** — security-first file loading order

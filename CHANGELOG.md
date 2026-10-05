@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Define the operator semantic model and add a read-only, evidence-scoped Eisenhower priority evaluator with explicit unknowns, conflicts and expiry. Dashboard integration remains future work.
 - Add explicit, opt-in business-operations flavor with Intel, Pipeline and Monetization snapshots, preview/apply/disable/restore and bounded local collection.
 - Document Command Center as standalone and Spacesuit as its highly recommended companion, without a standalone interaction UX.
 
