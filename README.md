@@ -37,8 +37,9 @@ these commands do not schedule jobs or restart anything. See the
 Spacesuit now includes [project tracker adapters](docs/adapters/project-trackers.md)
 for Linear projects and explicitly configured Jira epics. The offline preview/apply
 CLI converts provider exports into Command Center's shared project-board contract;
-**live tracker synchronization is not configured**. An injected, bounded read-only
-transport API is available for future authorized host connectors. Native status and
+explicit `sync-preview`/`sync` can also collect Linear once with an organization-bound
+host credential. **No recurring synchronization is installed; Jira remains offline
+or host-injected.** Native status and
 identity are preserved; memory/topic strategies remain independently composable.
 Asana and GitHub Issues are planned adapter targets, not implemented providers.
 

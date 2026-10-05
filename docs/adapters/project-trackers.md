@@ -2,10 +2,62 @@
 
 Spacesuit supplies optional tracker normalization. Command Center supplies the
 provider-independent, read-only project board and still works without Spacesuit.
-**Live tracker synchronization is not configured by these commands.** No credentials
-are read, stored, accepted as CLI flags, or copied into snapshots. The runnable CLI
-imports explicit local provider exports. The transport-injection API is groundwork
-for an authorized host connector, not an installed Linear/Jira integration.
+Offline `preview`/`apply` import local provider exports without credentials.
+Explicit `sync-preview`/`sync` can now collect **Linear only**, once, using a
+host-provided credential. Neither mode installs a background sync job. Credentials
+are never accepted as CLI flags, stored in config, or copied into snapshots.
+Jira remains an offline importer or host-injected transport, not a live CLI integration.
+
+## Read-only Linear collection
+
+Use a private config in a scratch workspace first:
+
+```json
+{
+  "schemaVersion": 1,
+  "profile": "",
+  "agentId": "main",
+  "sources": [{
+    "id": "linear-example", "provider": "linear", "label": "Planning",
+    "enabled": true, "organizationId": "YOUR_ORGANIZATION_ID",
+    "credentialEnv": "LINEAR_API_KEY", "authType": "api-key"
+  }]
+}
+```
+
+`organizationId` must be the native organization ID, not its URL slug; obtain it
+through an authenticated, read-only `organization { id }` query. Have your host's
+supported credential flow supply the named environment variable (or protected
+egress sentinel). Never put the value in JSON, shell history or a command argument.
+For OAuth use `authType: "oauth"`; API-key authorization is the default. Protected
+credentials require a host transport configured to honor the egress proxy and allow
+`api.linear.app`; this command does not configure or bypass the host's secret policy.
+
+```bash
+node scripts/projects.js sync-preview --workspace /path/to/workspace --config linear-config.json
+node scripts/projects.js sync --workspace /path/to/workspace --config linear-config.json
+```
+
+Preview performs reads but writes no files. Sync writes only local snapshots and
+selection. The live CLI prints source status/count/time, not project text. Exit 2
+means at least one source is partial, failed or skipped; a successful local write
+does not mean all providers succeeded. `liveSyncConfigured: false` means no recurring
+job is installed. The programmatic `run` result still contains normalized snapshots.
+
+Requests go only to `https://api.linear.app/graphql`, use a fixed read-only query,
+reject redirects, check organization identity on every page, and bound streamed
+bodies to 1 MiB before JSON parsing. The existing 10-second total collection deadline,
+10-page/200-project caps and partial status remain. HTTP/GraphQL failures are sanitized;
+429s are not retried. Schedule/backoff is a separate operator-owned decision.
+
+The query covers accessible, non-archived projects in that organization. Missing
+task counts/health stay unknown. The source retains its organization binding when
+disabled. Changing organizations or converting an offline source to live requires
+a **new source ID**; do not reuse an existing ID to relabel historical snapshots.
+Offline import cannot overwrite a bound live source. Failed refresh retains only
+same-organization previous data, with its original observation time and error status.
+Each sync config describes the complete desired selection: omitted sources are
+removed from the board, not merged implicitly. Preserve other sources in the config.
 
 ## Outcomes rather than task lists
 
@@ -145,5 +197,5 @@ Shapes and pagination follow [Linear GraphQL](https://linear.app/developers/grap
 [Jira enhanced issue search](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/).
 No real provider calls were made by the tests: a configured source pilot is still
 required to verify account-specific permissions, schema availability, and issue types.
-Asana, GitHub Issues, mutations, drag/drop transitions, live sync, and bidirectional
+Asana, GitHub Issues, mutations, drag/drop transitions, scheduled sync, and bidirectional
 conflict resolution are future capabilities—not advertised as working in v1.

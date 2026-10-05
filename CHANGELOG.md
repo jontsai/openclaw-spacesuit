@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add one-shot read-only Linear collection with organization binding, bounded streaming, credential-free snapshots and failure retention; no recurring job or Jira live transport is installed.
 - Add explicit, opt-in business-operations flavor with Intel, Pipeline and Monetization snapshots, preview/apply/disable/restore and bounded local collection.
 - Document Command Center as standalone and Spacesuit as its highly recommended companion, without a standalone interaction UX.
 
