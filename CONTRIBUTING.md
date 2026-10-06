@@ -160,11 +160,11 @@ Maintainers publish releases using ClawHub:
 
 ```bash
 # Ensure VERSION and CHANGELOG.md are updated
-clawhub publish . --registry https://clawhub.com
+clawhub publish /absolute/reviewed-staging-directory --slug spacesuit --version 0.4.0
 ```
 
 Contributors should:
-- Update VERSION file (semver)
+- Update VERSION, version.txt and SKILL.md together (SemVer)
 - Add CHANGELOG.md entry
 - Let maintainers handle the actual publish
 
@@ -210,3 +210,8 @@ provider responses in tests; no credentials or real tracker writes. Keep snapsho
 identity/status/freshness faithful, preserve unknown metrics, and test source
 isolation, pagination bounds, timeouts and safe file access. Do not claim live
 synchronization is configured when only local exports are imported.
+
+## Releases
+
+Follow [release preparation and migration checks](docs/releases/README.md).
+`make release V=0.4.0` validates only; publication is a separate action.
