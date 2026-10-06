@@ -225,3 +225,7 @@ Created by [jontsai](https://github.com/jontsai).
 ## License
 
 MIT
+
+## Work graph compiler
+
+Normalize reviewed Linear/Jira exports and runtime assignments into an evidence-labeled operations graph. [Contract, usage, and inference limits](docs/work-graph.md). This is an offline compiler, not live tracker synchronization.
