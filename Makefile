@@ -44,7 +44,7 @@ version: ## Show installed and available versions
 		echo "Installed: (not installed)"; \
 	fi
 
-release: ## Create a release (usage: make release V=0.4.0)
+release: ## Check release metadata only (usage: make release V=0.4.0)
 ifndef V
 	@echo "Usage: make release V=<version>"
 	@echo "  e.g., make release V=0.4.0"

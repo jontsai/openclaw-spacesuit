@@ -27,7 +27,7 @@ node scripts/flavors.js collect --workspace /path/to/workspace
 ```
 
 Requires Node.js 18+. See the flavor runbook for identity matching, bounds, core-only
-disable, backups and restore. Existing base install/upgrade behavior is unchanged;
+disable, backups and restore. Base upgrades now preserve unmarked files unless explicitly adopted;
 these commands do not schedule jobs or restart anything. See the
 [architecture](docs/architecture/agent-flavors.md) and
 [implementation plan](docs/plans/flavor-packages-v1.md).
@@ -78,7 +78,7 @@ After installation, run the installer to create workspace files from templates:
 
 ```bash
 cd skills/spacesuit
-make init
+bash scripts/install.sh --workspace /absolute/workspace
 ```
 
 This creates `AGENTS.md`, `SOUL.md`, `TOOLS.md`, `HEARTBEAT.md`, `SECURITY.md`, `MEMORY.md`, `IDENTITY.md`, `USER.md`, and `Makefile` at your workspace root — each with framework content wrapped in `SPACESUIT` markers and space for your customizations.
@@ -205,18 +205,20 @@ OPENCLAW_PROFILE=myprofile ./scripts/sync-operators.sh
 
 ## Releasing
 
-Releases are managed via git tags:
+Version bumps go through review. Publication is separate from validation:
 
 ```bash
-# Show current version
-make release
-
-# Create a release (tags, pushes, publishes to ClawHub)
-make release V=0.4.0
-
-# Tag only (no ClawHub publish)
-./scripts/release.sh 0.4.0 --tag-only
+bash scripts/release.sh --current
+bash scripts/release.sh 0.4.0
+bash scripts/release.sh 0.4.0 --stage /absolute/new/staging-directory
 ```
+
+These commands do not commit, tag, push or publish. Follow the
+[release and migration guide](docs/releases/README.md), including Bash 4+
+requirements, package validation and backup restoration. `version.txt` supports
+registry downloads that omit extensionless `VERSION`/`Makefile` files. Starter
+installation preserves existing files; upgrade preserves unmarked files unless
+`--adopt-unmarked` is selected explicitly after reviewing a dry run.
 
 ## Author
 
